@@ -1,0 +1,17 @@
+testgame TODO:
+
+> Map Objektorientiert machen (Tiledmap.lua)
+>> Aktuelle-Spieler-Position abfragen
+>> Kollisionskontrolle mit bestimmten Ebenen
+
+> Spieler Figur, Bewegung nur Kachel-weise, Figur ausrichten
+
+> Actions / Interaktion mit Welt
+
+> KI
+
+> MenŸs / weitere Karten laden
+
+> Quests
+
+> GIT (github?)
