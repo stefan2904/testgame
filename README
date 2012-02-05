@@ -1,17 +1,34 @@
-testgame TODO:
+--------------------------------------------------------------------------------
+testgame
+--------------------------------------------------------------------------------
 
-> Map Objektorientiert machen (Tiledmap.lua)
->> Aktuelle-Spieler-Position abfragen
+Das hier ist:
+> Kennenlernen von lua
+> Kennenlernen vom love
+> Arbeiten mit TildMaps
+> Verstehen der generellen Funktionsweise eines 2D RPG
+> Verstehen von Quests und KI
+
+Das hier ist nicht:
+> Ein fertiges RPG
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+offene TODOs:
+
+> Map-Funktionalitaet (Tiledmap.lua)
+>> Player Sprite verwenden
 >> Kollisionskontrolle mit bestimmten Ebenen
-
-> Spieler Figur, Bewegung nur Kachel-weise, Figur ausrichten
+>> Spieler Figur ausrichten
 
 > Actions / Interaktion mit Welt
 
+> Weitere Karte laden
+
+> Items / Inventar
+
 > KI
 
-> Menues / weitere Karten laden
+> Menues
 
 > Quests
-
-> GIT (github?)

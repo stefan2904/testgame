@@ -1,5 +1,5 @@
 -- config für love
--- für die speile konfiguration -> config.lua
+-- für die spiele konfiguration -> config.lua
 
 function love.conf(t)
     --t.title = "testgame"      -- The title of the window the game is in (string)
