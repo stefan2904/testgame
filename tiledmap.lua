@@ -1,3 +1,8 @@
+-- TiledMapLoader
+-- code by ghoulsblade via love2d forum
+-- modified by stefan
+-- https://love2d.org/forums/viewtopic.php?f=5&t=2411&p=25929#p25929
+-- https://love2d.org/wiki/TiledMapLoader
 -- loader for "tiled" map editor maps (.tmx,xml-based) http://www.mapeditor.org/
 -- supports multiple layers
 -- NOTE : function ReplaceMapTileClass (tx,ty,oldTileType,newTileType,fun_callback) end
@@ -11,7 +16,7 @@ local floor = math.floor
 local ceil = math.ceil
 
 function setPlayerPosition(y,x,s)
-  gCamX,gCamY = (x+0.5)*kTileSize,(y+0.5)*kTileSize
+  gCamX,gCamY = tile2px(x),tile2px(y)
   playerSprite = s
 end
 
@@ -68,7 +73,6 @@ function TiledMap_DrawNearCam (camx,camy)
     end
     end
 end
-
 
 -- ***** ***** ***** ***** ***** xml parser
 
@@ -140,7 +144,12 @@ local function getLayers(node)
     local layers = {}
     for k, sub in ipairs(node) do
         if (sub.label == "layer") then --  and sub.xarg.name == layer_name
-            debug("adding layer "..sub.xarg.name)
+            debug("adding layer "..sub.xarg.name.." at id "..#layers)
+            
+            if sub.xarg.name == background_layer_name then
+              backgroundLayer = #layers
+            end
+            
             local layer = {}
             table.insert(layers,layer)
             width = tonumber(sub.xarg.width)

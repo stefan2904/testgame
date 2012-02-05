@@ -1,12 +1,15 @@
 love.filesystem.load("debug.lua")()
 love.filesystem.load("config.lua")()
+love.filesystem.load("helper.lua")()
 love.filesystem.load("tiledmap.lua")()
+love.filesystem.load("collision.lua")()
 
-DEBUG = true
+DEBUG = true -- wenn false, dann kein debug-output
 
-gKeyPressed = {}
-gCamX,gCamY = 0,0
-playerSprite = 1
+gKeyPressed = {} -- aktuell gedrueckte keys
+gCamX,gCamY = 0,0 -- die position der kamera
+playerSprite = 0 -- sprite, der an player position gemalt wird
+backgroundLayer = 0 -- layer-id des hintergrundes
 curMap      = firstMap
 
 function love.draw()
@@ -23,7 +26,7 @@ function love.draw()
   --love.graphics.setColor(255, 255, 255)
   love.graphics.print("Welcome to "..gamename.." "..version.."!", 10, 10)
   love.graphics.print("Center is at ("..centerX.."/"..centerY..")", 10, 22)
-  love.graphics.print("Cam is at ("..gCamX.."/"..gCamY..") = ("..(gCamX/32)-0.5 .."/"..(gCamY/32)-0.5 ..")", 10, 34)
+  love.graphics.print("Cam is at ("..gCamX.."/"..gCamY..") = ("..px2tile(gCamX) .."/"..px2tile(gCamY) ..")", 10, 34)
   
   TiledMap_DrawNearCam(gCamX,gCamY)
   
@@ -31,7 +34,8 @@ function love.draw()
   centerY = screen_h/2
   a       = 16
   
-  love.graphics.quad("fill", centerX-a, centerY-a, centerX+a, centerY-a, centerX+a, centerY+a, centerX-a, centerY+a)
+  -- debug quad auf der mitte des fensters
+  -- love.graphics.quad("fill", centerX-a, centerY-a, centerX+a, centerY-a, centerX+a, centerY+a, centerX-a, centerY+a)
   
 end
 
@@ -47,11 +51,35 @@ end
 function love.update( dt )
    -- local s = 200*dt
     local s = kTileSize
+    
+    gMapLayers[#gMapLayers][px2tile(gCamY)][px2tile(gCamX)] = 0
+    
+    -- backup the position
+    tmpgCamY = gCamY
+    tmpgCamX = gCamX
+    
     if (gKeyPressed.up) then gCamY = gCamY - s end
     if (gKeyPressed.down) then gCamY = gCamY + s end
     if (gKeyPressed.left) then gCamX = gCamX - s end
     if (gKeyPressed.right) then gCamX = gCamX + s end
-    love.timer.sleep(100/player_speed) -- minimieren, um den spieler schneller zu machen
+    
+    if tmpgCamY ~= gCamY or  tmpgCamX ~= gCamX then -- position changed
+      if isValidPos(px2tile(gCamX), px2tile(gCamY)) then -- everything ok
+        
+        love.timer.sleep(100/player_speed) -- minimieren, um den spieler schneller zu machen
+        
+      else -- Collision!
+        
+        debug("invalid movement!")
+        -- undo movement
+        gCamY = tmpgCamY
+        gCamX = tmpgCamX
+        
+      end
+    end
+    
+    gMapLayers[#gMapLayers][px2tile(gCamY)][px2tile(gCamX)] = playerSprite
+    
 end
 
 function love.load()
