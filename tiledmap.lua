@@ -141,6 +141,7 @@ local function getTilesets(node)
                for l, child in ipairs(sub) do
                  if l > 1 then
                    --debug(child[1][1].xarg.name.." = "..tonumber(sub.xarg.firstgid)+child.xarg.id)
+                    --gplayerSprite[child[1][1].xarg.name] = tonumber(sub.xarg.firstgid)+child.xarg.id
                     if child[1][1].xarg.name == "player_up" then
                       playerSprite_up = tonumber(sub.xarg.firstgid)+child.xarg.id
                     elseif child[1][1].xarg.name == "player_down" then
@@ -184,8 +185,9 @@ local function getLayers(node)
                   end
 
                   if child.xarg.name == "ignoreCollision" and (child.xarg.value == "1" or child.xarg.value == "true") then
-                    debug("added "..sub.xarg.name.." layer to ignoreCollision-list")
+                    debug("added "..sub.xarg.name.." layer at id "..#layers.." to ignoreCollision-list")
                     --TODO: add to ignoreCollision list/array/set
+                    ignoreCollision[#ignoreCollision] = #layers
                   end
 
                 end

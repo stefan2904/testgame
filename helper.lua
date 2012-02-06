@@ -17,7 +17,8 @@ function getPlayerSprite(x, y, oldx, oldy)
     return playerSprite_down
   elseif x  < oldx then
     return playerSprite_left
-  else
+  elseif x > oldx then
     return playerSprite_right
   end
+  -- return gplayerSprite["playerSprite_right"]
 end

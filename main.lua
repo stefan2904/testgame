@@ -8,10 +8,12 @@ DEBUG = true -- wenn false, dann kein debug-output
 
 gKeyPressed = {} -- aktuell gedrueckte keys
 gCamX,gCamY = 0,0 -- die position der kamera
+--gplayerSprite = {}
 playerSprite_up = 0 -- sprite, der an player position gemalt wird
 playerSprite_down = 0 -- sprite, der an player position gemalt wird
 playerSprite_left = 0 -- sprite, der an player position gemalt wird
 playerSprite_right = 0 -- sprite, der an player position gemalt wird
+ignoreCollision = {} -- layers to ignore in collision controll (background, etc)
 playerLayer = 0
 curMap      = firstMap
 
