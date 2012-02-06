@@ -31,3 +31,28 @@ offene TODOs:
 > Menues
 
 > Quests
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+MAPPING HOWTO:
+> http://www.mapeditor.org/
+> Neue Map
+>> Orthogonale Ausrichtung
+>> (optimal) 32px-Kachelgroesse (sonst im main.lua aendern!)
+>>> beliebige Groesse
+> Tileset laden
+> Mappen!
+> Paramater setzen:
+>> tile
+>>> player_left
+>>> player_right
+>>> player_up
+>>> player_down
+>> tileset
+>>> keine notwendig
+>> layer
+>>> ignoreCollision
+>>> isPlayer
+>> Map
+>>> keine notwendig
+>Speichern, fertig!
