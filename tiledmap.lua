@@ -135,6 +135,26 @@ local function getTilesets(node)
         if (sub.label == "tileset") then
             tiles[tonumber(sub.xarg.firstgid)] = sub[1].xarg.source
             debug("adding tileset "..sub[1].xarg.source.." at tiles offset "..tonumber(sub.xarg.firstgid))
+             
+            if #sub > 1 then
+               
+               for l, child in ipairs(sub) do
+                 if l > 1 then
+                   --debug(child[1][1].xarg.name.." = "..tonumber(sub.xarg.firstgid)+child.xarg.id)
+                    if child[1][1].xarg.name == "player_up" then
+                      playerSprite_up = tonumber(sub.xarg.firstgid)+child.xarg.id
+                    elseif child[1][1].xarg.name == "player_down" then
+                      playerSprite_down = tonumber(sub.xarg.firstgid)+child.xarg.id
+                    elseif child[1][1].xarg.name == "player_left" then
+                      playerSprite_left = tonumber(sub.xarg.firstgid)+child.xarg.id
+                    elseif child[1][1].xarg.name == "player_right" then
+                      playerSprite_right = tonumber(sub.xarg.firstgid)+child.xarg.id
+                    end
+                 end
+              end
+              
+            end
+            
         end
     end
     return tiles
@@ -144,25 +164,43 @@ local function getLayers(node)
     local layers = {}
     for k, sub in ipairs(node) do
         if (sub.label == "layer") then --  and sub.xarg.name == layer_name
-            debug("adding layer "..sub.xarg.name.." at id "..#layers)
-            
-            if sub.xarg.name == background_layer_name then
-              backgroundLayer = #layers
-            end
+            debug("adding layer "..sub.xarg.name.." at id "..#layers+1)
             
             local layer = {}
             table.insert(layers,layer)
             width = tonumber(sub.xarg.width)
             i = 1
             j = 1
-            for l, child in ipairs(sub[1]) do
+            
+            offset = 1
+            if sub[1].label == "properties" then
+              
+               for l, child in ipairs(sub[offset]) do
+
+                  if child.xarg.name == "isPlayer" and (child.xarg.value == "1" or child.xarg.value == "true") then
+                    -- found the player layer!
+                    playerLayer = #layers
+                    debug("found player layer at id "..playerLayer)
+                  end
+
+                  if child.xarg.name == "ignoreCollision" and (child.xarg.value == "1" or child.xarg.value == "true") then
+                    debug("added "..sub.xarg.name.." layer to ignoreCollision-list")
+                    --TODO: add to ignoreCollision list/array/set
+                  end
+
+                end
+              
+             offset = offset + 1
+            end
+            
+            for l, child in ipairs(sub[offset]) do
                 if (j == 1) then
                     layer[i] = {}
                 end
                 layer[i][j] = tonumber(child.xarg.gid)
                 -- debug("tile "..layer[i][j].." at "..i.."/"..j.." on layer "..sub.xarg.name)
                 
-                if (sub.xarg.name == player_layer_name) then -- is player-layer
+                if (#layers == playerLayer) then -- is player-layer
                   if (layer[i][j] ~= 0) then -- is not nothing
                     debug("player at "..j.."/"..i.." using sprite "..layer[i][j])
                     setPlayerPosition(i,j,layer[i][j])
@@ -182,6 +220,7 @@ end
 
 function TiledMap_Parse(filename)
     debug("parsing TildeMap..")
+   -- print(xml)
     local xml = LoadXML(love.filesystem.read(filename))
     local tiles = getTilesets(xml[2])
     local layers = getLayers(xml[2])
