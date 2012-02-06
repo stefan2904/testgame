@@ -8,8 +8,11 @@ DEBUG = true -- wenn false, dann kein debug-output
 
 gKeyPressed = {} -- aktuell gedrueckte keys
 gCamX,gCamY = 0,0 -- die position der kamera
-playerSprite = 0 -- sprite, der an player position gemalt wird
-backgroundLayer = 0 -- layer-id des hintergrundes
+playerSprite_up = 0 -- sprite, der an player position gemalt wird
+playerSprite_down = 0 -- sprite, der an player position gemalt wird
+playerSprite_left = 0 -- sprite, der an player position gemalt wird
+playerSprite_right = 0 -- sprite, der an player position gemalt wird
+playerLayer = 0
 curMap      = firstMap
 
 function love.draw()
@@ -52,7 +55,7 @@ function love.update( dt )
    -- local s = 200*dt
     local s = kTileSize
     
-    gMapLayers[#gMapLayers][px2tile(gCamY)][px2tile(gCamX)] = 0
+    gMapLayers[playerLayer][px2tile(gCamY)][px2tile(gCamX)] = 0
     
     -- backup the position
     tmpgCamY = gCamY
@@ -64,6 +67,9 @@ function love.update( dt )
     if (gKeyPressed.right) then gCamX = gCamX + s end
     
     if tmpgCamY ~= gCamY or  tmpgCamX ~= gCamX then -- position changed
+      
+      playerSprite = getPlayerSprite(gCamX, gCamY, tmpgCamX, tmpgCamY)
+      
       if isValidPos(px2tile(gCamX), px2tile(gCamY)) then -- everything ok
         
         love.timer.sleep(100/player_speed) -- minimieren, um den spieler schneller zu machen
@@ -78,7 +84,7 @@ function love.update( dt )
       end
     end
     
-    gMapLayers[#gMapLayers][px2tile(gCamY)][px2tile(gCamX)] = playerSprite
+    gMapLayers[playerLayer][px2tile(gCamY)][px2tile(gCamX)] = playerSprite
     
 end
 
