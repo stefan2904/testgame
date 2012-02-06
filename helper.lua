@@ -22,3 +22,14 @@ function getPlayerSprite(x, y, oldx, oldy)
   end
   -- return gplayerSprite["playerSprite_right"]
 end
+
+-- ist die value im set?
+function isIn(value, set)
+  for l in ipairs(set) do 
+    --debug("compare "..l.." to "..value)
+    if set[l] == value then 
+      return true
+    end
+  end
+  return false
+end

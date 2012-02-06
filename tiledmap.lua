@@ -182,12 +182,13 @@ local function getLayers(node)
                     -- found the player layer!
                     playerLayer = #layers
                     debug("found player layer at id "..playerLayer)
+                    ignoreCollision[#ignoreCollision+1] = #layers
                   end
 
                   if child.xarg.name == "ignoreCollision" and (child.xarg.value == "1" or child.xarg.value == "true") then
                     debug("added "..sub.xarg.name.." layer at id "..#layers.." to ignoreCollision-list")
                     --TODO: add to ignoreCollision list/array/set
-                    ignoreCollision[#ignoreCollision] = #layers
+                    ignoreCollision[#ignoreCollision+1] = #layers
                   end
 
                 end
