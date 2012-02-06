@@ -1,7 +1,8 @@
 --------------------------------------------------------------------------------
 testgame
+ by stefan
 --------------------------------------------------------------------------------
-
+--------------------------------------------------------------------------------
 Das hier ist:
 > Kennenlernen von lua
 > Kennenlernen vom love
@@ -14,22 +15,84 @@ Das hier ist nicht:
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
+implementierte TODOs:
+
+> TiledMap (XML) einlesen (tiledmap.lua)
+> Debug Mechanismus (debug.lua)
+> Readme (this)
+> TiledMap parsen (tiledmap.lua)
+> TiledMap anzeigen (tiledmap.lua)
+> Spieler platzieren (main.lua & tiledmap.lua)
+> Koordinaten umrechnen (helper.lua)
+> GIT-Repo (https://github.com/stefan2904/testgame)
+> 2. Test-Map (map/test1.tmx)
+> Eigenschaften aus der TiledMap parsen (tiledmap.lua)
+> Spieler nach geh-Richtung ausrichten (helper.lua)
+> einfache Kollisionskontrolle (collision.lua)
+
+--------------------------------------------------------------------------------
 offene TODOs:
 
-> Map-Funktionalitaet (Tiledmap.lua)
->> Kollisionskontrolle mit bestimmten Ebenen
+> Map-Funktionalitaet (tiledmap.lua)
 
-> Actions / Interaktion mit Welt
+> 3. Test-Map (map/test2.tmx)
 
-> Weitere Karte laden
+> Actions / Interaktion mit Welt (actions.lua)
+>> Weitere Karte laden
+----------------------------------------------------
+Trigger-Layer (via Layer Eigenschaft)
+Beliebige Actions pro Tile pro Feld
 
-> Items / Inventar
+Key-Value Pairs in den Tile-Eigenschaften:
+zB "loadLevel" : "test2.tmx"
+zB "initQuest" : "quest1.qst"
+zB "warning" : "Bruecke gesperrt"
+mehrere Parameter per String-Trennung & Zerlegung im Programm
+zB "items" : "messer;stein;papier"
+
+im Programm:
+
+Init von Array:
+actions[x][y][1].name = "loadLevel" 
+actions[x][y][1].params = "test2.tmx" 
+actions[x][y][2].name = "initQuest" 
+actions[x][y][2].params = "quest1.qst"
+        ^--^---------------Koordinaten
+              ^------------Anzahl der Actions
+                  ^- ["name"] und ["params"]
+                  
+Bei jedem Schritt:
+Checken ob Action(s) auf aktuellem Feld
+action/<ActionName>.lua laden
+Aufrug Funktion <ActionName>(<Params>) oder do(<Params>) ?
+
+FRAGEN:
+> sicherstellen, dass 1 Action nur 1 mal aufgerufen wird (nur bei Bewegung?)
+> wie Actions, die Benutzer-Interaktion erfordern (zB Schild lesen, ansprechen)
+
+----------------------------------------------------
+
+> mehrere Einstiegspunkte
+>> Reihenfolge?
+>> Standard-Einstiegspunkt in Map-Eigenschaften?
+
+> Items (-> Item Layer) / Inventar
 
 > KI
+>> Routen ablaufen
+>> Spaeter fuer Dialoge/Quests/Trigger
 
 > Menues
+>> Einstellungen
+>> Speichern (???)
+>> Anzeigen von Dialogen
+
+> Dialoge 
+>> Trigger in Map
+>> Dialog-Files
 
 > Quests
+>> Dialoge meets Trigger meets Items
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -40,6 +103,7 @@ MAPPING HOWTO:
 >> (optimal) 32px-Kachelgroesse (sonst im main.lua aendern!)
 >>> beliebige Groesse
 > Tileset laden
+> eigenes Tileset fuer Trigger (?)
 > Mappen!
 > Paramater setzen:
 >> tile
@@ -50,8 +114,12 @@ MAPPING HOWTO:
 >> tileset
 >>> keine notwendig
 >> layer
->>> ignoreCollision
->>> isPlayer
+>>> ignoreCollision -> zB fuer Hintergrund
+>>> isPlayer -> Ebene hat nur ein Tile -> den Startpunkt
+>>> hide -> zB fuer Trigger-Ebene
+>>> isTrigger -> fuer Trigger-Ebene
 >> Map
 >>> keine notwendig
->Speichern, fertig!
+> Speichern, fertig!
+
+--------------------------------------------------------------------------------

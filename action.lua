@@ -1,0 +1,2 @@
+-- testgame action handler
+-- siehe README
