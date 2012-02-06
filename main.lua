@@ -94,7 +94,3 @@ function love.load()
     love.graphics.setCaption(gamename.." "..version)
     TiledMap_Load("map/"..curMap)
 end
-
-function loadMap(mapName)
-  curMap      = mapName
-end

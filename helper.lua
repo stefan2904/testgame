@@ -33,3 +33,8 @@ function isIn(value, set)
   end
   return false
 end
+
+-- laed die gegebene Karte :o
+function loadMap(mapName)
+  curMap      = mapName
+end

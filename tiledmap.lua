@@ -140,16 +140,18 @@ local function getTilesets(node)
                
                for l, child in ipairs(sub) do
                  if l > 1 then
-                   --debug(child[1][1].xarg.name.." = "..tonumber(sub.xarg.firstgid)+child.xarg.id)
+                   debug(child[1][1].xarg.name.." = "..tonumber(sub.xarg.firstgid)+child.xarg.id)
+                   for kk=1, #child[1] do
                     --gplayerSprite[child[1][1].xarg.name] = tonumber(sub.xarg.firstgid)+child.xarg.id
-                    if child[1][1].xarg.name == "player_up" then
+                    if child[1][kk].xarg.name == "player_up" then
                       playerSprite_up = tonumber(sub.xarg.firstgid)+child.xarg.id
-                    elseif child[1][1].xarg.name == "player_down" then
+                    elseif child[1][kk].xarg.name == "player_down" then
                       playerSprite_down = tonumber(sub.xarg.firstgid)+child.xarg.id
-                    elseif child[1][1].xarg.name == "player_left" then
+                    elseif child[1][kk].xarg.name == "player_left" then
                       playerSprite_left = tonumber(sub.xarg.firstgid)+child.xarg.id
-                    elseif child[1][1].xarg.name == "player_right" then
+                    elseif child[1][kk].xarg.name == "player_right" then
                       playerSprite_right = tonumber(sub.xarg.firstgid)+child.xarg.id
+                    end  
                     end
                  end
               end
